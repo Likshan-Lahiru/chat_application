@@ -40,7 +40,7 @@ public class LoginController implements Initializable {
         loadDateandTime();
     }
     @FXML
-    void btnLoginOnAction(ActionEvent event) throws SQLException {
+    void btnLoginOnAction(ActionEvent event) throws SQLException, IOException {
         if (txtUserName.getText().isEmpty()||txtPassword.getText().isEmpty()){
             new SystemAlert(Alert.AlertType.WARNING,"warning!","please enter the all details! !", ButtonType.OK).show();
             return;
@@ -49,9 +49,14 @@ public class LoginController implements Initializable {
         String passwordText = txtPassword.getText();
        boolean check = new LoginModel().checkCredentional(new LoginDto(txtUserNameText,passwordText));
        if (check){
-           System.out.println("next step");
+           AnchorPane anchorPane = FXMLLoader.load(this.getClass().getResource("/view/client_form.fxml"));
+           Scene scene = new Scene(anchorPane);
+           Stage stage =(Stage)root.getScene().getWindow();
+           stage.setScene(scene);
+           stage.setTitle("SignUp Page");
+           stage.centerOnScreen();
        }else {
-           System.out.println("error");
+           new SystemAlert(Alert.AlertType.WARNING,"warning!","invalid username or password !", ButtonType.OK).show();
        }
     }
     @FXML

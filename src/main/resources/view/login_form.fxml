@@ -47,5 +47,10 @@
          </image>
       </ImageView>
       <JFXButton layoutX="225.0" layoutY="578.0" onAction="#btnSignUpOnAction" text="Sign Up" textFill="#01acfc" />
+      <ImageView fitHeight="168.0" fitWidth="168.0" layoutX="101.0" layoutY="590.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/pngwingline.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

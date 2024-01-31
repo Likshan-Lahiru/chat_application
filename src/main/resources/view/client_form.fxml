@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="700.0" prefWidth="361.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.LoginController">
    <children>
+      <ImageView fitHeight="700.0" fitWidth="383.0" layoutX="1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/8c98994518b575bfd8c949e91d20548b.jpg" />
+         </image>
+      </ImageView>
+      <Pane layoutX="4.0" layoutY="598.0" prefHeight="89.0" prefWidth="361.0" style="-fx-background-radius: 30; -fx-background-color: #e9ecef;" />
+      <Pane layoutX="1.0" layoutY="7.0" prefHeight="98.0" prefWidth="361.0" style="-fx-background-radius: 30; -fx-background-color: #ffff;" />
       <ImageView fitHeight="700.0" fitWidth="361.0" layoutX="1.0" layoutY="-1.0">
          <image>
             <Image url="@../assets/apple-iphone-15-pro-max-2023-medium.png" />
@@ -28,5 +38,38 @@
             <Image url="@../assets/icons8-battery.gif" />
          </image>
       </ImageView>
+      <TextField layoutX="54.0" layoutY="613.0" prefHeight="33.0" prefWidth="238.0" style="-fx-background-radius: 30; -fx-background-color: white;" styleClass="transparent" />
+      <JFXButton contentDisplay="RIGHT" layoutX="11.0" layoutY="614.0" prefHeight="22.0" prefWidth="37.0" text=".">
+         <graphic>
+            <ImageView fitHeight="23.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/toppng.com-lus-icon-blue-plus-icon-800x797.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <ImageView fitHeight="168.0" fitWidth="168.0" layoutX="91.0" layoutY="590.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/pngwingline.png" />
+         </image>
+      </ImageView>
+      <JFXButton layoutX="248.0" layoutY="611.0" prefHeight="33.0" prefWidth="47.0" text="`">
+         <graphic>
+            <ImageView fitHeight="27.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/img.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton layoutX="292.0" layoutY="611.0" prefHeight="33.0" prefWidth="47.0" text="`">
+         <graphic>
+            <ImageView blendMode="EXCLUSION" fitHeight="27.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/send.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
    </children>
 </AnchorPane>
