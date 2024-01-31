@@ -35,6 +35,7 @@ public class LoginController implements Initializable {
 
     @FXML
     private PasswordField txtPassword;
+    public static String username = "";
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadDateandTime();
@@ -45,6 +46,7 @@ public class LoginController implements Initializable {
             new SystemAlert(Alert.AlertType.WARNING,"warning!","please enter the all details! !", ButtonType.OK).show();
             return;
         }
+        username = txtUserName.getText();
         String txtUserNameText = txtUserName.getText();
         String passwordText = txtPassword.getText();
        boolean check = new LoginModel().checkCredentional(new LoginDto(txtUserNameText,passwordText));
@@ -53,7 +55,7 @@ public class LoginController implements Initializable {
            Scene scene = new Scene(anchorPane);
            Stage stage =(Stage)root.getScene().getWindow();
            stage.setScene(scene);
-           stage.setTitle("SignUp Page");
+           stage.setTitle("Client Page");
            stage.centerOnScreen();
        }else {
            new SystemAlert(Alert.AlertType.WARNING,"warning!","invalid username or password !", ButtonType.OK).show();

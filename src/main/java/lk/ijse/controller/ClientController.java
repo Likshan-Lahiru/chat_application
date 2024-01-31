@@ -7,9 +7,14 @@ import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.util.Duration;
+import lk.ijse.dto.LoginDto;
+import lk.ijse.model.LoginModel;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
@@ -17,9 +22,21 @@ import java.util.ResourceBundle;
 public class ClientController implements Initializable {
     @FXML
     private Label lblTime;
+
+    @FXML
+    private ImageView imgUserImg;
+
+    @FXML
+    private Label lblUserName;
+    private static String username;
+
+    @FXML
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        username = LoginController.username;
+        System.out.println("username: "+username);
         loadDateandTime();
+        setDetails();
     }
 
     private void loadDateandTime() {
@@ -37,5 +54,19 @@ public class ClientController implements Initializable {
         timeline.play();
     }
 
+    private void setDetails(){
+        try {
+            LoginDto user = LoginModel.getUser(username);
+            if (user != null) {
+                lblUserName.setText(user.getUserName());
+                System.out.println(username);
+                if (user.getImg() != null){
+                    imgUserImg.setImage(new Image(user.getImg()));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
