@@ -114,6 +114,9 @@ public class ClientController implements Initializable {
         System.out.println("username: "+username);
         loadDateandTime();
         setDetails();
+        emoji();
+    }
+    private void emoji(){
         emojiAnchorpane.setVisible(false);
         int buttonIndex = 0;
         for (int row = 0; row < 4; row++) {
@@ -194,7 +197,7 @@ public class ClientController implements Initializable {
     void btnSendOnAction(ActionEvent event) throws IOException {
         String text = txtUserMessage.getText();
         if (text != null){
-            sendMessage(text);
+            appendText(text);
             try {
                 client.sendMessage(text);
                 txtUserMessage.clear();
@@ -204,6 +207,18 @@ public class ClientController implements Initializable {
         } else{
             new Alert(Alert.AlertType.INFORMATION, "message is empty").show();
         }
+    }
+    void appendText(String massage) {
+        HBox hBox = new HBox();
+        hBox.setStyle("-fx-alignment: center-right;-fx-fill-height: true;-fx-min-height: 50;-fx-pref-width: 520;-fx-max-width: 520;-fx-padding: 10");
+        Label massageLbl = new Label(massage);
+        massageLbl.setStyle("-fx-background-color:  #008011;-fx-background-radius:15;-fx-font-size: 18;-fx-font-weight: normal;-fx-text-fill: white;-fx-wrap-text: true;-fx-alignment: center-left;-fx-content-display: left;-fx-padding: 10;-fx-max-width: 350;");
+        hBox.getChildren().add(massageLbl);
+        vBox.getChildren().add(hBox);
+        new Thread(() -> {
+
+        }).start();
+
     }
 
     private void sendMessage(String text) throws IOException {
@@ -233,7 +248,7 @@ public class ClientController implements Initializable {
     public void setImage(byte[] bytes, String sender) {
         HBox hBox = new HBox();
         Label messageLbl = new Label(sender);
-        messageLbl.setStyle("-fx-background-color:   #2980b9;-fx-background-radius:15;-fx-font-size: 18;-fx-font-weight: normal;-fx-text-fill: white;-fx-wrap-text: true;-fx-alignment: center;-fx-content-display: left;-fx-padding: 10;-fx-max-width: 350;");
+        messageLbl.setStyle("-fx-background-color:   #70e000;-fx-background-radius:15;-fx-font-size: 18;-fx-font-weight: normal;-fx-text-fill: black;-fx-wrap-text: true;-fx-alignment: center;-fx-content-display: left;-fx-padding: 10;-fx-max-width: 350;");
 
         hBox.setStyle("-fx-fill-height: true; -fx-min-height: 50; -fx-pref-width: 520; -fx-max-width: 520; -fx-padding: 10; " + (sender.equals(client.getName()) ? "-fx-alignment: center-right;" : "-fx-alignment: center-left;"));
 
