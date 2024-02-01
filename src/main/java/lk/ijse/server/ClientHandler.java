@@ -1,44 +1,79 @@
 package lk.ijse.server;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.PrintWriter;
+import lk.ijse.controller.ClientController;
+
+import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ClientHandler extends Thread{
-    private Socket socket;
+    public static final List<ClientHandler> clientHandlerList = new ArrayList<>();
+    public static ClientController clientController;
+    private final Socket socket;
+    private final DataInputStream inputStream;
+    private final DataOutputStream outputStream;
+    private final String clientName;
 
-    private ArrayList<ClientHandler> clientHandlers;
+    public ClientHandler(Socket socket) throws IOException {
+        this.socket = socket;
+        inputStream = new DataInputStream(socket.getInputStream());
+        outputStream = new DataOutputStream(socket.getOutputStream());
+        clientName = inputStream.readUTF();
+        clientHandlerList.add(this);
+    }
 
-    private BufferedReader bufferedReader;
-
-    private PrintWriter printWriter;
-
-    public ClientHandler(Socket socket, ArrayList<ClientHandler> clientHandlers){
-        try {
-            this.socket = socket;
-            this.clientHandlers = clientHandlers;
-            this.bufferedReader = new BufferedReader(new java.io.InputStreamReader(socket.getInputStream()));
-            this.printWriter = new PrintWriter(socket.getOutputStream(), true);
-        } catch (Exception e) {
-            e.printStackTrace();
+    public static void broadcast(String msg) throws IOException {
+        for (ClientHandler handler : clientHandlerList) {
+            handler.sendMessage("SERVER", msg);
         }
     }
+
     @Override
-    public void run(){
-        try {
-            String message;
-            while ((message = bufferedReader.readLine()) != null){
-                for (ClientHandler client : clientHandlers) {
-                    client.printWriter.println(message);
+    public void run() {
+        l1: while (socket.isConnected()) {
+            try {
+                String utf = inputStream.readUTF();
+                if (utf.equals("*image*")) {
+                    receiveImage();
+                } else {
+                    for (ClientHandler handler : clientHandlerList) {
+                        if (!handler.clientName.equals(clientName)) {
+                            handler.sendMessage(clientName, utf);
+                        }
+                    }
                 }
+            } catch (IOException e) {
+
+                clientHandlerList.remove(this);
+                break;
             }
-            printWriter.close();
-            bufferedReader.close();
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+    }
+
+    public void sendMessage(String sender, String msg) throws IOException {
+        outputStream.writeUTF(sender + ": " + msg);
+        outputStream.flush();
+    }
+
+    private void receiveImage() throws IOException {
+        int size = inputStream.readInt();
+        byte[] bytes = new byte[size];
+        inputStream.readFully(bytes);
+        for (ClientHandler handler : clientHandlerList) {
+            if (!handler.clientName.equals(clientName)) {
+                handler.sendImage(clientName, bytes);
+
+            }
+        }
+    }
+
+    private void sendImage(String sender, byte[] bytes) throws IOException {
+        outputStream.writeUTF("*image*");
+        outputStream.writeUTF(sender);
+        outputStream.writeInt(bytes.length);
+        outputStream.write(bytes);
+        outputStream.flush();
+
     }
 }
