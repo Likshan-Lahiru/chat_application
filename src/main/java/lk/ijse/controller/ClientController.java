@@ -82,5 +82,19 @@ public class ClientController implements Initializable {
             e.printStackTrace();
         }
     }
+    @FXML
+    void btnAttachmentOnAction(ActionEvent event) {
+        System.out.println("attachment button");
+    }
+
+    @FXML
+    void btnEmojiOnAction(ActionEvent event) {
+        System.out.println("emoji button");
+    }
+
+    @FXML
+    void btnSendOnAction(ActionEvent event) {
+        System.out.println("send button");
+    }
 
 }
