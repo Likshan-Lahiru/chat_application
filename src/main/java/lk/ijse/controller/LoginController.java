@@ -52,11 +52,12 @@ public class LoginController implements Initializable {
        boolean check = new LoginModel().checkCredentional(new LoginDto(txtUserNameText,passwordText));
        if (check){
            AnchorPane anchorPane = FXMLLoader.load(this.getClass().getResource("/view/client_form.fxml"));
+
            Scene scene = new Scene(anchorPane);
-           Stage stage =(Stage)root.getScene().getWindow();
-           stage.setScene(scene);
-           stage.setTitle("Client Page");
-           stage.centerOnScreen();
+           Stage stage1 =(Stage)root.getScene().getWindow();
+           stage1.setScene(scene);
+           stage1.setTitle("Client Page");
+           stage1.centerOnScreen();
        }else {
            new SystemAlert(Alert.AlertType.WARNING,"warning!","invalid username or password !", ButtonType.OK).show();
        }

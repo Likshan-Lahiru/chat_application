@@ -22,12 +22,15 @@ import lk.ijse.client.Client;
 import lk.ijse.dto.LoginDto;
 import lk.ijse.model.LoginModel;
 import javafx.scene.control.*;
+import lk.ijse.server.ClientHandler;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ClientController implements Initializable {
@@ -51,7 +54,10 @@ public class ClientController implements Initializable {
 
     public static String username = "";
     private Client client;
+    @FXML
     public AnchorPane emojiAnchorpane;
+
+    @FXML
     public GridPane emojiGridpane;
     private final String[] emojis = {
             "\uD83D\uDE00", // 😀
@@ -88,7 +94,7 @@ public class ClientController implements Initializable {
         button.setStyle("-fx-font-size: 15; -fx-text-fill: black; -fx-background-color: #F0F0F0; -fx-border-radius: 50");
         return button;
     }
-
+    @FXML
     private void emojiButtonAction(ActionEvent event) {
         JFXButton button = (JFXButton) event.getSource();
         txtUserMessage.appendText(button.getText());
@@ -154,8 +160,32 @@ public class ClientController implements Initializable {
 
 
     @FXML
-    void btnSendOnAction(ActionEvent event) {
-        System.out.println("send button");
+    void btnSendOnAction(ActionEvent event) throws IOException {
+        emojiAnchorpane.setVisible(false);
+        String text = txtUserMessage.getText();
+        if (!Objects.equals(text, "")) {
+            sendMessage(text);
+        } else {
+            ButtonType ok = new ButtonType("Ok");
+            ButtonType cancel = new ButtonType("Cancel");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Empty message. Is it ok?", ok, cancel);
+            alert.showAndWait();
+            ButtonType result = alert.getResult();
+            if (result.equals(ok)) {
+                sendMessage(text);
+            }
+        }
+    }
+
+    private void sendMessage(String text) throws IOException {
+        ClientHandler.broadcast(text);
+        HBox hBox = new HBox();
+        hBox.setStyle("-fx-alignment: center-right;-fx-fill-height: true;-fx-min-height: 50;-fx-pref-width: 520;-fx-max-width: 520;-fx-padding: 10");
+        Label messageLbl = new Label(text);
+        messageLbl.setStyle("-fx-background-color:  #2980b9;-fx-background-radius:15;-fx-font-size: 18;-fx-font-weight: normal;-fx-text-fill: black;-fx-wrap-text: true;-fx-alignment: center-left;-fx-content-display: left;-fx-padding: 10;-fx-max-width: 350;");
+        hBox.getChildren().add(messageLbl);
+        vBox.getChildren().add(hBox);
+        txtUserMessage.clear();
     }
 
     public void writeMessage(String message) {
