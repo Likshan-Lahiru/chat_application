@@ -21,7 +21,7 @@ public class Client implements Runnable, Serializable {
 
     public Client(String name) throws IOException {
         this.name = name;
-        socket = new Socket("localhost", 1236);
+        socket = new Socket("localhost", 3200);
         inputStream = new DataInputStream(socket.getInputStream());
         outputStream = new DataOutputStream(socket.getOutputStream());
         outputStream.writeUTF(name);
@@ -72,7 +72,7 @@ public class Client implements Runnable, Serializable {
 
     private void loadScene() throws IOException {
         Stage stage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ClientChatForm.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/client_form.fxml"));
         Parent parent = loader.load();
         clientChatFormController = loader.getController();
         clientChatFormController.setClient(this);

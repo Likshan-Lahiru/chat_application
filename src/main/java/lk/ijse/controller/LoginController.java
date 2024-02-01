@@ -12,9 +12,12 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import lk.ijse.client.Client;
 import lk.ijse.dto.LoginDto;
 import lk.ijse.model.LoginModel;
+import lk.ijse.server.Server;
 import lk.ijse.util.SystemAlert;
+import lombok.SneakyThrows;
 
 import java.io.IOException;
 import java.net.URL;
@@ -36,8 +39,12 @@ public class LoginController implements Initializable {
     @FXML
     private PasswordField txtPassword;
     public static String username = "";
+    @SneakyThrows
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Server serverSocket = Server.getServerSocket();
+        Thread thread = new Thread(serverSocket);
+        thread.start();
         loadDateandTime();
     }
     @FXML
@@ -51,13 +58,15 @@ public class LoginController implements Initializable {
         String passwordText = txtPassword.getText();
        boolean check = new LoginModel().checkCredentional(new LoginDto(txtUserNameText,passwordText));
        if (check){
-           AnchorPane anchorPane = FXMLLoader.load(this.getClass().getResource("/view/client_form.fxml"));
+           Client client = new Client(txtUserNameText);
+           new Thread(client).start();
+           //AnchorPane anchorPane = FXMLLoader.load(this.getClass().getResource("/view/client_form.fxml"));
 
-           Scene scene = new Scene(anchorPane);
+           /*Scene scene = new Scene(anchorPane);
            Stage stage1 =(Stage)root.getScene().getWindow();
            stage1.setScene(scene);
            stage1.setTitle("Client Page");
-           stage1.centerOnScreen();
+           stage1.centerOnScreen();*/
        }else {
            new SystemAlert(Alert.AlertType.WARNING,"warning!","invalid username or password !", ButtonType.OK).show();
        }

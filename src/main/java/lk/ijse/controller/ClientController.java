@@ -8,7 +8,9 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -17,6 +19,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import lk.ijse.client.Client;
 import lk.ijse.dto.LoginDto;
@@ -25,8 +29,11 @@ import javafx.scene.control.*;
 import lk.ijse.server.ClientHandler;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.sql.SQLException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -154,26 +161,48 @@ public class ClientController implements Initializable {
     }
     @FXML
     void btnAttachmentOnAction(ActionEvent event) {
-        System.out.println("attachment button");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Image File");
+        FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg");
+        fileChooser.getExtensionFilters().add(imageFilter);
+        File selectedFile = fileChooser.showOpenDialog(new Stage());
+        if (selectedFile != null) {
+            try {
+                byte[] bytes = Files.readAllBytes(selectedFile.toPath());
+                HBox hBox = new HBox();
+                hBox.setStyle("-fx-fill-height: true; -fx-min-height: 50; -fx-pref-width: 520; -fx-max-width: 520; -fx-padding: 10; -fx-alignment: center-right;");
+
+
+                ImageView imageView = new ImageView(new Image(new FileInputStream(selectedFile)));
+                imageView.setStyle("-fx-padding: 10px;");
+                imageView.setFitHeight(180);
+                imageView.setFitWidth(100);
+
+                hBox.getChildren().addAll(imageView);
+                vBox.getChildren().add(hBox);
+
+                client.sendImage(bytes);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
 
 
     @FXML
     void btnSendOnAction(ActionEvent event) throws IOException {
-        emojiAnchorpane.setVisible(false);
         String text = txtUserMessage.getText();
-        if (!Objects.equals(text, "")) {
+        if (text != null){
             sendMessage(text);
-        } else {
-            ButtonType ok = new ButtonType("Ok");
-            ButtonType cancel = new ButtonType("Cancel");
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Empty message. Is it ok?", ok, cancel);
-            alert.showAndWait();
-            ButtonType result = alert.getResult();
-            if (result.equals(ok)) {
-                sendMessage(text);
+            try {
+                client.sendMessage(text);
+                txtUserMessage.clear();
+            } catch (IOException e) {
+                new Alert(Alert.AlertType.ERROR, "Something went wrong : server down").show();
             }
+        } else{
+            new Alert(Alert.AlertType.INFORMATION, "message is empty").show();
         }
     }
 
@@ -182,7 +211,7 @@ public class ClientController implements Initializable {
         HBox hBox = new HBox();
         hBox.setStyle("-fx-alignment: center-right;-fx-fill-height: true;-fx-min-height: 50;-fx-pref-width: 520;-fx-max-width: 520;-fx-padding: 10");
         Label messageLbl = new Label(text);
-        messageLbl.setStyle("-fx-background-color:  #2980b9;-fx-background-radius:15;-fx-font-size: 18;-fx-font-weight: normal;-fx-text-fill: black;-fx-wrap-text: true;-fx-alignment: center-left;-fx-content-display: left;-fx-padding: 10;-fx-max-width: 350;");
+        messageLbl.setStyle("-fx-background-color:  #70e000;-fx-background-radius:15;-fx-font-size: 18;-fx-font-weight: normal;-fx-text-fill: black;-fx-wrap-text: true;-fx-alignment: center-left;-fx-content-display: left;-fx-padding: 10;-fx-max-width: 350;");
         hBox.getChildren().add(messageLbl);
         vBox.getChildren().add(hBox);
         txtUserMessage.clear();
@@ -192,7 +221,7 @@ public class ClientController implements Initializable {
         HBox hBox = new HBox();
         hBox.setStyle("-fx-alignment: center-left;-fx-fill-height: true;-fx-min-height: 50;-fx-pref-width: 520;-fx-max-width: 520;-fx-padding: 10");
         Label messageLbl = new Label(message);
-        messageLbl.setStyle("-fx-background-color:   #2980b9;-fx-background-radius:15;-fx-font-size: 18;-fx-font-weight: normal;-fx-text-fill: white;-fx-wrap-text: true;-fx-alignment: center-left;-fx-content-display: left;-fx-padding: 10;-fx-max-width: 350;");
+        messageLbl.setStyle("-fx-background-color:   #70e000;-fx-background-radius:15;-fx-font-size: 18;-fx-font-weight: normal;-fx-text-fill: black;-fx-wrap-text: true;-fx-alignment: center-left;-fx-content-display: left;-fx-padding: 10;-fx-max-width: 350;");
         hBox.getChildren().add(messageLbl);
         Platform.runLater(() -> vBox.getChildren().add(hBox));
     }
@@ -217,5 +246,13 @@ public class ClientController implements Initializable {
             hBox.getChildren().addAll(messageLbl, imageView);
             vBox.getChildren().add(hBox);
         });
+    }
+    @FXML
+    void testOnaction(ActionEvent event) throws IOException {
+        Stage stage = new Stage();
+        stage.setScene(new Scene(FXMLLoader.load(this.getClass().getResource("/view/login_form.fxml"))));
+        stage.setTitle("Login Form");
+        stage.centerOnScreen();
+        stage.show();
     }
 }
