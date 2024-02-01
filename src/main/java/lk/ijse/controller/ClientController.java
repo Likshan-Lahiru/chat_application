@@ -101,10 +101,18 @@ public class ClientController implements Initializable {
         button.setStyle("-fx-font-size: 15; -fx-text-fill: black; -fx-background-color: #F0F0F0; -fx-border-radius: 50");
         return button;
     }
-    @FXML
+
     private void emojiButtonAction(ActionEvent event) {
+
+        JFXButton button = (JFXButton) event.getSource();
+        txtUserMessage.appendText(button.getText());
+    }
+    @FXML
+    void btnEmojiAction(ActionEvent event) {
         emojiAnchorpane.setVisible(!emojiAnchorpane.isVisible());
     }
+
+
 
     @FXML
     @Override
