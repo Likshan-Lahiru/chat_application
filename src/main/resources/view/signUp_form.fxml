@@ -38,6 +38,11 @@
             <Image url="@../assets/klipartz.com.png" />
          </image>
       </ImageView>
+      <ImageView fitHeight="168.0" fitWidth="168.0" layoutX="101.0" layoutY="592.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/pngwingline.png" />
+         </image>
+      </ImageView>
       <JFXButton buttonType="RAISED" layoutX="202.0" layoutY="254.0" onAction="#btnImageChooserOnAction" text=".">
          <graphic>
             <ImageView fitHeight="23.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
@@ -56,10 +61,5 @@
          </font></JFXButton>
       <JFXPasswordField fx:id="txtPassword" layoutX="46.0" layoutY="358.0" opacity="0.6" prefHeight="38.0" prefWidth="270.0" promptText="  Password" />
       <JFXPasswordField fx:id="txtVerifiedPassword" layoutX="46.0" layoutY="417.0" opacity="0.6" prefHeight="38.0" prefWidth="270.0" promptText="  Verified Password" />
-      <ImageView fitHeight="168.0" fitWidth="168.0" layoutX="101.0" layoutY="592.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../assets/pngwingline.png" />
-         </image>
-      </ImageView>
    </children>
 </AnchorPane>

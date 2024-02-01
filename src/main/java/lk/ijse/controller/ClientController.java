@@ -7,11 +7,14 @@ import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import lk.ijse.dto.LoginDto;
 import lk.ijse.model.LoginModel;
+import javafx.scene.control.*;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -24,11 +27,21 @@ public class ClientController implements Initializable {
     private Label lblTime;
 
     @FXML
+    private TextField txtUserMessage;
+
+    @FXML
     private ImageView imgUserImg;
 
     @FXML
     private Label lblUserName;
-    private static String username;
+
+    @FXML
+    private ScrollPane ScrollPane;
+
+    @FXML
+    private VBox vBox;
+
+    public static String username = "";
 
     @FXML
     @Override

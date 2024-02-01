@@ -26,7 +26,7 @@
       </JFXButton>
       <Line endX="181.0" layoutX="141.0" layoutY="571.0" startX="-100.0" />
       <Label layoutX="96.0" layoutY="583.0" prefHeight="17.0" prefWidth="143.0" text="Don't Have An Account? " textFill="#a49696" />
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="111.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="111.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
          <image>
             <Image url="@../assets/pngwing.com.png" />
          </image>
@@ -46,11 +46,12 @@
             <Image url="@../assets/icons8-battery.gif" />
          </image>
       </ImageView>
-      <JFXButton layoutX="225.0" layoutY="578.0" onAction="#btnSignUpOnAction" text="Sign Up" textFill="#01acfc" />
       <ImageView fitHeight="168.0" fitWidth="168.0" layoutX="101.0" layoutY="590.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/pngwingline.png" />
          </image>
       </ImageView>
+      <JFXButton layoutX="225.0" layoutY="578.0" onAction="#btnSignUpOnAction" text="Sign Up" textFill="#01acfc" />
+      <Label layoutX="135.0" layoutY="257.0" prefHeight="17.0" prefWidth="101.0" text="Play Tech Pvt Ltd." textAlignment="CENTER" />
    </children>
 </AnchorPane>
