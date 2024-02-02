@@ -12,7 +12,7 @@ public class Server implements Runnable {
 
     private Server() throws IOException {
         serverSocket = new ServerSocket(3200);
-        System.out.println("Server Started");
+        System.out.println("Server started...");
     }
 
     public static Server getServerSocket() throws IOException {
@@ -22,7 +22,7 @@ public class Server implements Runnable {
     @Override
     public void run() {
         while (!serverSocket.isClosed()) {
-            System.out.println("listening.......");
+            System.out.println("Waiting for client...");
             try {
                 Socket accepted = serverSocket.accept();
                 ClientHandler clientHandler = new ClientHandler(accepted);

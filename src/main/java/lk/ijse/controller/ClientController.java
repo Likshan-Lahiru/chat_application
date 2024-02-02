@@ -27,7 +27,6 @@ import lk.ijse.dto.LoginDto;
 import lk.ijse.model.LoginModel;
 import javafx.scene.control.*;
 import lk.ijse.server.ClientHandler;
-
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,7 +36,6 @@ import java.nio.file.Files;
 import java.sql.SQLException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ClientController implements Initializable {
@@ -160,7 +158,7 @@ public class ClientController implements Initializable {
             LoginDto user = LoginModel.getUser(username);
             if (user != null) {
                 lblUserName.setText(user.getUserName());
-                System.out.println(username);
+               // System.out.println(username);
                 if (user.getImg() != null){
                     imgUserImg.setImage(new Image(user.getImg()));
                 }
@@ -262,8 +260,8 @@ public class ClientController implements Initializable {
         Platform.runLater(() -> {
             ImageView imageView = new ImageView(new Image(new ByteArrayInputStream(bytes)));
             imageView.setStyle("-fx-padding: 10px;");
-            imageView.setFitHeight(180);
-            imageView.setFitWidth(100);
+            imageView.setFitHeight(150);
+            imageView.setFitWidth(150);
 
             hBox.getChildren().addAll(messageLbl, imageView);
             vBox.getChildren().add(hBox);

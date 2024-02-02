@@ -60,13 +60,7 @@ public class LoginController implements Initializable {
        if (check){
            Client client = new Client(txtUserNameText);
            new Thread(client).start();
-           //AnchorPane anchorPane = FXMLLoader.load(this.getClass().getResource("/view/client_form.fxml"));
 
-           /*Scene scene = new Scene(anchorPane);
-           Stage stage1 =(Stage)root.getScene().getWindow();
-           stage1.setScene(scene);
-           stage1.setTitle("Client Page");
-           stage1.centerOnScreen();*/
        }else {
            new SystemAlert(Alert.AlertType.WARNING,"warning!","invalid username or password !", ButtonType.OK).show();
        }
@@ -81,9 +75,7 @@ public class LoginController implements Initializable {
         stage.centerOnScreen();
     }
     private void loadDateandTime() {
-        /*Date date = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        lblDate.setText(format.format(date));*/
+
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, e ->{
             DateTimeFormatter format2 = DateTimeFormatter.ofPattern("HH:mm");

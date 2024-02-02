@@ -115,9 +115,7 @@ public class SignUpController implements Initializable {
 
 
     private void loadDateandTime() {
-        /*Date date = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        lblDate.setText(format.format(date));*/
+
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, e ->{
             DateTimeFormatter format2 = DateTimeFormatter.ofPattern("HH:mm");
