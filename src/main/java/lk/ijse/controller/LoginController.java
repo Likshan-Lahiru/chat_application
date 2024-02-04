@@ -59,6 +59,9 @@ public class LoginController implements Initializable {
        boolean check = new LoginModel().checkCredentional(new LoginDto(txtUserNameText,passwordText));
        if (check){
            Client client = new Client(txtUserNameText);
+           txtPassword.clear();
+           txtUserName.clear();
+
            new Thread(client).start();
 
        }else {
